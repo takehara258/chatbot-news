@@ -15,14 +15,12 @@ def index():
 
 @app.route("/api/recommend_article")
 def api_recommend_article():
+    # 日経平均株価を取得
     with urlopen("https://finance.yahoo.co.jp/") as res:
         html = res.read().decode("utf-8")
-
     soup = BeautifulSoup(html, "html.parser")
-
     items = soup(class_='ymuiEditLink mar0')
     item = items[0]
-
     return json.dumps({
         "content": item.string
     })
